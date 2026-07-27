@@ -1,0 +1,23 @@
+name = "shadowwatch-api"
+main = "src/index.ts"
+compatibility_date = "2024-04-05"
+
+[observability]
+enabled = true
+
+[[d1_databases]]
+binding = "DB"
+database_name = "shadowwatch-db"
+database_id = "00000000-0000-0000-0000-000000000000" # Replace after creating DB
+
+[[r2_buckets]]
+binding = "EVIDENCE_BUCKET"
+bucket_name = "shadowwatch-evidence"
+
+[[kv_namespaces]]
+binding = "SESSION_STORE"
+id = "00000000000000000000000000000000" # Replace after creating KV
+
+[vars]
+NVIDIA_NIM_BASE_URL = "https://integrate.api.nvidia.com/v1"
+NVIDIA_NIM_DEFAULT_MODEL = "z-ai/glm-5.2"
