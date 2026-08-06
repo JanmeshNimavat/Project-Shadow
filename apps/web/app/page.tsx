@@ -1,4 +1,37 @@
+"use client";
+
+import { useThreats } from '../hooks/useThreats';
+import { useMemo } from 'react';
+
 export default function Dashboard() {
+  const { threats } = useThreats();
+
+  const metrics = useMemo(() => {
+    return {
+      total: threats.length,
+      critical: threats.filter(t => t.classification === 'Malicious').length,
+      avgConfidence: threats.length ? Math.round(threats.reduce((acc, t) => acc + t.confidenceScore, 0) / threats.length) : 0
+    };
+  }, [threats]);
+
+  const getBadgeStyle = (classification: string) => {
+    if (classification === 'Malicious') return 'bg-accent-red/10 text-accent-red border-accent-red/20';
+    if (classification === 'Suspicious') return 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20';
+    return 'bg-accent-green/10 text-accent-green border-accent-green/20';
+  };
+
+  const getTimelineDotStyle = (classification: string) => {
+    if (classification === 'Malicious') return 'bg-accent-red';
+    if (classification === 'Suspicious') return 'bg-yellow-500';
+    return 'bg-accent-green';
+  };
+
+  const getTimelineTextStyle = (classification: string) => {
+    if (classification === 'Malicious') return 'text-accent-red';
+    if (classification === 'Suspicious') return 'text-yellow-500';
+    return 'text-accent-green';
+  };
+
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
       <div className="flex justify-between items-end">
@@ -30,11 +63,11 @@ export default function Dashboard() {
               <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
               </svg>
-              12%
+              Live
             </span>
           </div>
-          <h3 className="text-gray-400 font-medium text-sm">Active Investigations</h3>
-          <p className="text-3xl font-display font-bold text-white mt-1">142</p>
+          <h3 className="text-gray-400 font-medium text-sm">Analyzed Threats</h3>
+          <p className="text-3xl font-display font-bold text-white mt-1">{metrics.total}</p>
         </div>
 
         <div className="bg-primary-800/80 backdrop-blur-md rounded-2xl p-6 border border-border shadow-lg hover:shadow-xl hover:border-border/80 transition-all group relative overflow-hidden">
@@ -46,8 +79,8 @@ export default function Dashboard() {
               </svg>
             </div>
           </div>
-          <h3 className="text-gray-400 font-medium text-sm relative z-10">Critical Threat Alerts</h3>
-          <p className="text-3xl font-display font-bold text-white mt-1 relative z-10">7</p>
+          <h3 className="text-gray-400 font-medium text-sm relative z-10">Critical Malicious Alerts</h3>
+          <p className="text-3xl font-display font-bold text-white mt-1 relative z-10">{metrics.critical}</p>
         </div>
 
         <div className="bg-primary-800/80 backdrop-blur-md rounded-2xl p-6 border border-border shadow-lg hover:shadow-xl hover:border-border/80 transition-all group">
@@ -58,10 +91,10 @@ export default function Dashboard() {
               </svg>
             </div>
           </div>
-          <h3 className="text-gray-400 font-medium text-sm">Evidence Vault Storage</h3>
-          <p className="text-3xl font-display font-bold text-white mt-1">8.4 TB</p>
+          <h3 className="text-gray-400 font-medium text-sm">Avg. AI Confidence Score</h3>
+          <p className="text-3xl font-display font-bold text-white mt-1">{metrics.avgConfidence}%</p>
           <div className="w-full bg-primary-900 rounded-full h-1.5 mt-4">
-            <div className="bg-gradient-to-r from-accent-blue to-accent-purple h-1.5 rounded-full" style={{ width: '42%' }}></div>
+            <div className="bg-gradient-to-r from-accent-blue to-accent-purple h-1.5 rounded-full" style={{ width: `${metrics.avgConfidence}%` }}></div>
           </div>
         </div>
       </div>
@@ -83,30 +116,25 @@ export default function Dashboard() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-border">
-                <tr className="hover:bg-white/[0.02] transition-colors group cursor-pointer">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">SW-2026-04291</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">Ransomware Affiliate</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-accent-blue/10 text-accent-blue border border-accent-blue/20">Active Analysis</span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">10 mins ago</td>
-                </tr>
-                <tr className="hover:bg-white/[0.02] transition-colors group cursor-pointer">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">SW-2026-04290</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">Dark Web Market Dump</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-accent-red/10 text-accent-red border border-accent-red/20">Critical Alert</span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">1 hour ago</td>
-                </tr>
-                <tr className="hover:bg-white/[0.02] transition-colors group cursor-pointer">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">SW-2026-04288</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">Financial Fraud Ring</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-gray-700 text-gray-300 border border-gray-600">Pending Review</span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">4 hours ago</td>
-                </tr>
+                {threats.slice(0, 5).map((threat) => (
+                  <tr key={threat.id} className="hover:bg-white/[0.02] transition-colors group cursor-pointer">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">{threat.id}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{threat.threatType}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className={"px-2.5 py-1 rounded-full text-xs font-medium border " + getBadgeStyle(threat.classification)}>
+                        {threat.classification}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                      {new Date(threat.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                    </td>
+                  </tr>
+                ))}
+                {threats.length === 0 && (
+                  <tr>
+                    <td colSpan={4} className="px-6 py-8 text-center text-gray-500 text-sm">No recent investigations found. Analyze a threat to populate.</td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
@@ -121,36 +149,21 @@ export default function Dashboard() {
               Intelligence Feed
             </h2>
           </div>
-          <div className="p-6 space-y-6 flex-1">
-            <div className="flex gap-4">
-              <div className="relative">
-                <div className="w-2 h-2 rounded-full bg-accent-blue mt-1.5 shadow-[0_0_8px_rgba(12,102,228,0.8)]"></div>
-                <div className="absolute top-3.5 bottom-[-24px] left-[3px] w-px bg-border"></div>
+          <div className="p-6 space-y-6 flex-1 overflow-y-auto max-h-[400px]">
+            {threats.slice(0, 4).map((threat, idx) => (
+              <div key={threat.id} className="flex gap-4">
+                <div className="relative">
+                  <div className={"w-2 h-2 rounded-full mt-1.5 shadow-[0_0_8px_rgba(255,255,255,0.4)] " + getTimelineDotStyle(threat.classification)}></div>
+                  {idx !== threats.slice(0,4).length - 1 && <div className="absolute top-3.5 bottom-[-24px] left-[3px] w-px bg-border"></div>}
+                </div>
+                <div>
+                  <p className={"text-xs font-semibold uppercase tracking-wider mb-1 " + getTimelineTextStyle(threat.classification)}>
+                    {new Date(threat.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} • SENTINEL AI
+                  </p>
+                  <p className="text-sm text-gray-300 leading-relaxed line-clamp-2">{threat.analysis}</p>
+                </div>
               </div>
-              <div>
-                <p className="text-xs font-semibold text-accent-blue uppercase tracking-wider mb-1">2 mins ago • SENTINEL AI</p>
-                <p className="text-sm text-gray-300 leading-relaxed">High threat activity detected for vendor 'Cryptic0x' on AlphaBay forum.</p>
-              </div>
-            </div>
-            <div className="flex gap-4">
-              <div className="relative">
-                <div className="w-2 h-2 rounded-full bg-accent-purple mt-1.5 shadow-[0_0_8px_rgba(135,119,217,0.8)]"></div>
-                <div className="absolute top-3.5 bottom-[-24px] left-[3px] w-px bg-border"></div>
-              </div>
-              <div>
-                <p className="text-xs font-semibold text-accent-purple uppercase tracking-wider mb-1">15 mins ago • GRAPH ENGINE</p>
-                <p className="text-sm text-gray-300 leading-relaxed">New marketplace dump correlates with 3 active financial fraud cases.</p>
-              </div>
-            </div>
-            <div className="flex gap-4">
-              <div className="relative">
-                <div className="w-2 h-2 rounded-full bg-gray-500 mt-1.5"></div>
-              </div>
-              <div>
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">1 hour ago • ORACLE</p>
-                <p className="text-sm text-gray-400 leading-relaxed">Case SW-2026-04270 automated summary generated and appended.</p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
