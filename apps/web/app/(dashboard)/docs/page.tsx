@@ -6,9 +6,9 @@ export default function DocsPage() {
           <svg className="w-10 h-10 text-accent-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
           </svg>
-          ShadowWatch Documentation
+          Aegis Documentation
         </h1>
-        <p className="text-xl text-gray-400">Everything you need to know about the ShadowWatch Cyber Intelligence Platform.</p>
+        <p className="text-xl text-gray-400">Everything you need to know about the Aegis Cyber Intelligence Platform.</p>
       </div>
 
       <div className="prose prose-invert prose-blue max-w-none space-y-8">
@@ -20,7 +20,7 @@ export default function DocsPage() {
             Getting Started
           </h2>
           <p className="text-gray-300 leading-relaxed mb-4">
-            ShadowWatch is a next-generation security operations platform powered by NVIDIA AI. It is designed to rapidly ingest, analyze, and remediate cyber threats across multiple attack vectors.
+            Aegis is a next-generation security operations platform powered by NVIDIA AI. It is designed to rapidly ingest, analyze, and remediate cyber threats across multiple attack vectors.
           </p>
           <ul className="list-disc pl-5 space-y-2 text-gray-300">
             <li><strong>Guest Mode:</strong> You are currently able to use the platform without an account. All data is stored locally in your browser to preserve privacy.</li>
@@ -50,7 +50,7 @@ export default function DocsPage() {
         <section className="bg-primary-800/50 border border-border rounded-2xl p-8 shadow-sm">
           <h2 className="text-2xl font-bold text-white mb-4">Architecture & Privacy</h2>
           <p className="text-gray-300 leading-relaxed mb-4">
-            ShadowWatch operates on a strictly localized architecture for Guest users. No investigation data leaves your browser unless you explicitly export it. The AI inference is routed securely through NVIDIA NIM gateways with zero-retention policies.
+            Aegis operates on a strictly localized architecture for Guest users. No investigation data leaves your browser unless you explicitly export it. The AI inference is routed securely through NVIDIA NIM gateways with zero-retention policies.
           </p>
         </section>
       </div>

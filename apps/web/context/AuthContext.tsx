@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     // Mock user for local development to bypass Firebase auth
     const mockUser = {
       uid: "local-dev-123",
-      email: "agent47@shadowwatch.gov",
+      email: "agent47@aegis.gov",
       displayName: "Agent 47",
       emailVerified: true,
       isAnonymous: false,
