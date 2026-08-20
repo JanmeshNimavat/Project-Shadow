@@ -75,11 +75,11 @@ export function Chatbot() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-[100] flex flex-col items-end pointer-events-none">
+    <div className="fixed bottom-24 md:bottom-6 right-4 md:right-6 z-[100] flex flex-col items-end pointer-events-none">
       
       {/* Chat Window */}
       {isOpen && (
-        <div className="pointer-events-auto w-[380px] h-[500px] max-h-[calc(100vh-100px)] mb-4 bg-primary-900/95 backdrop-blur-xl border border-border/80 rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-in slide-in-from-bottom-5 fade-in duration-300">
+        <div className="pointer-events-auto w-[340px] md:w-[380px] h-[450px] md:h-[500px] max-h-[calc(100vh-140px)] mb-4 bg-primary-900/95 backdrop-blur-xl border border-border/80 rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-in slide-in-from-bottom-5 fade-in duration-300">
           
           {/* Header */}
           <div className="p-4 border-b border-border/50 bg-white/[0.02] flex justify-between items-center">
