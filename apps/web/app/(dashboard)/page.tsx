@@ -53,13 +53,13 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-6 animate-in fade-in duration-500">
-      <div className="flex justify-between items-end border-b border-border/50 pb-4">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-4 border-b border-border/50 pb-4">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-white mb-1">SOC Dashboard</h1>
           <p className="text-gray-400 text-sm">Security Operations Center - Global Threat Overview</p>
         </div>
-        <div className="flex gap-3">
-          <button onClick={simulateAttack} className="flex items-center gap-2 px-4 py-2 rounded-md bg-[#EF5350] hover:bg-[#EF5350]/90 text-white text-xs font-bold transition-all shadow-sm">
+        <div className="flex flex-wrap gap-3">
+          <button onClick={simulateAttack} className="flex items-center justify-center w-full md:w-auto gap-2 px-4 py-2 rounded-md bg-[#EF5350] hover:bg-[#EF5350]/90 text-white text-xs font-bold transition-all shadow-sm">
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
@@ -68,7 +68,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Metric Cards */}
         <div className="bg-primary-800/50 rounded-lg p-5 border border-border flex flex-col justify-between">
           <h3 className="text-gray-400 font-medium text-xs uppercase tracking-wider">Total Alerts (24h)</h3>
