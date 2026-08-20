@@ -36,6 +36,16 @@ export function Topnav() {
   return (
     <header className="h-16 flex items-center justify-between px-4 md:px-8 bg-transparent z-50 relative border-b border-border/30">
       <div className="flex-1 flex items-center gap-4">
+        {/* Mobile Logo */}
+        <div className="md:hidden font-display font-bold text-white flex items-center gap-2">
+          <div className="w-6 h-6 rounded-md bg-gradient-to-br from-accent-blue to-accent-purple flex items-center justify-center">
+            <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          Aegis
+        </div>
+        
         <div className="relative w-full max-w-md hidden sm:block">
           <svg className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -48,7 +58,7 @@ export function Topnav() {
           />
         </div>
       </div>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2 md:gap-4">
         <div className="relative">
           <button onClick={() => setShowNotifications(!showNotifications)} className="p-2 text-gray-400 hover:text-white transition-colors relative">
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -60,7 +70,7 @@ export function Topnav() {
           </button>
           
           {showNotifications && (
-            <div className="absolute right-0 mt-2 w-80 bg-primary-800 border border-border rounded-xl shadow-2xl py-2 z-50 animate-in fade-in slide-in-from-top-4 duration-200">
+            <div className="absolute right-0 mt-2 w-[300px] md:w-80 bg-primary-800 border border-border rounded-xl shadow-2xl py-2 z-50 animate-in fade-in slide-in-from-top-4 duration-200">
               <div className="px-4 py-2 border-b border-border">
                 <h3 className="text-sm font-semibold text-white">System Alerts</h3>
               </div>
@@ -96,7 +106,7 @@ export function Topnav() {
             </div>
           )}
         </div>
-        <button onClick={handleExport} className="bg-primary-800 hover:bg-primary-700 text-white text-xs font-bold px-4 py-2 rounded-md border border-border/50 transition-colors shadow-sm tracking-wider uppercase">
+        <button onClick={handleExport} className="hidden md:block bg-primary-800 hover:bg-primary-700 text-white text-xs font-bold px-4 py-2 rounded-md border border-border/50 transition-colors shadow-sm tracking-wider uppercase">
           Export Log
         </button>
         <div className="pl-2 border-l border-border/50 flex items-center">
@@ -105,7 +115,7 @@ export function Topnav() {
           ) : (
             <Link 
               href="/sign-in" 
-              className="bg-white text-black hover:bg-gray-100 text-sm font-medium px-4 py-2 rounded-lg transition-colors shadow-sm"
+              className="bg-white text-black hover:bg-gray-100 text-xs md:text-sm font-medium px-3 py-1.5 md:px-4 md:py-2 rounded-lg transition-colors shadow-sm"
             >
               Sign In
             </Link>
