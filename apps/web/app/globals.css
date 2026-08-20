@@ -18,4 +18,37 @@
   }
 }
 
+@media print {
+  /* Hide UI elements that shouldn't be printed */
+  aside, 
+  header, 
+  button {
+    display: none !important;
+  }
+  
+  /* Reset background and text for clean printing */
+  body {
+    background-color: white !important;
+    color: black !important;
+  }
+  
+  .bg-primary-900,
+  .bg-primary-800\/80,
+  .bg-primary-800,
+  .bg-white\/5 {
+    background-color: white !important;
+    border: 1px solid #e5e7eb !important;
+    color: black !important;
+  }
+  
+  h1, h2, h3, p, span, td, th {
+    color: black !important;
+  }
 
+  /* Make main content take full width */
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+}

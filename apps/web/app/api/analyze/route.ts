@@ -11,21 +11,21 @@ export async function POST(request: Request) {
     // You can hardcode this here or use process.env.NVIDIA_API_KEY
     const API_KEY = process.env.NVIDIA_API_KEY || "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";
 
-    const systemPrompt = `You are Sentinel AI, an expert cybersecurity threat analysis engine. 
+    const systemPrompt = `You are ATI Engine, an elite Level-3 SOC analyst AI. 
     Analyze the following \${artifactType} for potential cyber threats.
-    - If it is a Network PCAP, look for C2 beacons, abnormal data exfiltration, or exploitation attempts.
-    - If it is a Sysmon Event, look for credential dumping, suspicious child processes, or privilege escalation.
-    - If it is a Malware Hash (MD5/SHA256) or PE header, evaluate known signatures or suspicious imports.
-    - If it is a URL/Email, look for phishing indicators or malicious payloads.
     
-    Respond strictly in JSON format with the following structure:
+    1. Look for known IOCs (Indicators of Compromise).
+    2. Check for abnormal behaviors (e.g., C2 beacons, credential dumping).
+    3. Cross-reference with standard MITRE ATT&CK vectors.
+    
+    Respond strictly in JSON format with exactly this structure:
     {
       "classification": "Benign" | "Suspicious" | "Malicious",
-      "confidenceScore": number (0-100),
-      "threatType": string (e.g. "SQL Injection", "Phishing", "Ransomware", "C2 Communication", "None"),
-      "analysis": string (detailed explanation of exactly what you found and why it's a threat),
-      "indicators": string[] (list of IOCs like IP addresses, domains, suspicious keywords, or "None"),
-      "recommendation": string (actionable advice for the security team)
+      "confidenceScore": <number between 0 and 100>,
+      "threatType": "<Short label e.g., SQL Injection, Phishing, None>",
+      "analysis": "<Detailed, highly technical explanation of findings>",
+      "indicators": ["<List>", "<of>", "<extracted>", "<IOCs>", "or 'None'"],
+      "recommendation": "<Actionable mitigation steps for incident responders>"
     }`;
 
     const response = await fetch("https://integrate.api.nvidia.com/v1/chat/completions", {
@@ -35,12 +35,12 @@ export async function POST(request: Request) {
         "Authorization": `Bearer \${API_KEY}`
       },
       body: JSON.stringify({
-        model: "z-ai/glm-5.2",
+        model: "meta/llama-3.1-70b-instruct",
         messages: [
           { role: "system", content: systemPrompt },
           { role: "user", content: `Please analyze this \${artifactType}:\n\n\${content}` }
         ],
-        temperature: 0.2,
+        temperature: 0.1,
         max_tokens: 1024,
         response_format: { type: "json_object" }
       })

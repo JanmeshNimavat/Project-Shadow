@@ -1,39 +1,37 @@
 import "./globals.css";
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { Sidebar } from "../components/Sidebar";
-import { Topnav } from "../components/Topnav";
-import { ClerkProvider } from '@clerk/nextjs'
-import { dark } from '@clerk/themes';
+import type { Metadata, Viewport } from "next";
+import { Roboto, Rubik, JetBrains_Mono } from "next/font/google";
+import { ClerkProvider } from '@clerk/nextjs';
+import { Toaster } from 'sonner';
 
-const inter = Inter({ subsets: ["latin"] });
+const roboto = Roboto({ weight: ['400', '500', '700'], subsets: ["latin"], variable: '--font-sans' });
+const rubik = Rubik({ subsets: ["latin"], variable: '--font-display' });
+const jetBrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: '--font-mono' });
+
+export const viewport: Viewport = {
+  themeColor: "#0A0A0C", // Darker premium theme color
+}
 
 export const metadata: Metadata = {
-  title: "ShadowWatch | Cyber Intelligence Portal",
+  title: "Aegis | Cyber Intelligence Portal",
   description: "Cyber Crime Reporting & Evidence Management System",
   manifest: "/manifest.json",
-  themeColor: "#1e1e2e",
 };
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
-}): JSX.Element {
+}) {
   return (
-    <ClerkProvider appearance={{ baseTheme: dark }}>
+    <ClerkProvider>
       <html lang="en">
-        <body className={inter.className}>
-          <div className="flex h-screen overflow-hidden bg-primary-900 text-foreground selection:bg-accent-purple/30">
-            <Sidebar />
-            <div className="flex flex-col flex-1 overflow-hidden relative">
-              <div className="absolute top-0 left-0 w-full h-[300px] bg-accent-blue/10 blur-[100px] -z-10 pointer-events-none" />
-              <Topnav />
-              <main className="flex-1 overflow-y-auto p-8 z-10">
-                {children}
-              </main>
-            </div>
-          </div>
+        <body className={`\${roboto.variable} \${rubik.variable} \${jetBrainsMono.variable} font-sans bg-[#0A0A0C] text-white selection:bg-accent-blue/30 selection:text-accent-blue antialiased`}>
+          <div className="fixed inset-0 z-[-1] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary-800/40 via-[#0A0A0C] to-[#0A0A0C]"></div>
+          {children}
+          <Toaster theme="dark" position="bottom-right" toastOptions={{
+            style: { background: '#111213', border: '1px solid #2C2F33', color: '#F4F5F7' }
+          }} />
         </body>
       </html>
     </ClerkProvider>

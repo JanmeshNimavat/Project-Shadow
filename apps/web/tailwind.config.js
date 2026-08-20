@@ -8,30 +8,35 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Teamwork Graph inspired aesthetic
+        // Deep Premium Dark Theme
         primary: {
-          900: '#111213', // App background
-          800: '#1C1E21', // Card background
-          700: '#2C2F33', // Hover states
-          600: '#3D4148', // Borders
+          900: '#0A0A0C', // Very deep base
+          800: '#141417', // Elevated card background
+          700: '#1F1F24', // Hover states
+          600: '#2E2E36', // Borders
         },
         accent: {
-          blue: '#0C66E4',
-          purple: '#8777D9',
-          green: '#22A06B',
-          red: '#EF5350'
+          blue: '#2563EB', // Deeper modern blue
+          purple: '#8B5CF6', 
+          green: '#10B981',
+          red: '#F43F5E'
         },
-        background: '#111213',
-        foreground: '#F4F5F7',
-        border: '#2C2F33',
+        background: '#0A0A0C',
+        foreground: '#F8FAFC',
+        border: '#1F1F24',
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        display: ['Inter', 'sans-serif'],
+        sans: ['var(--font-sans)', 'sans-serif'],
+        display: ['var(--font-display)', 'sans-serif'],
+        mono: ['var(--font-mono)', 'monospace'],
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'glass-gradient': 'linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%)',
+        'glass-gradient': 'linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0) 100%)',
+      },
+      boxShadow: {
+        'glass': '0 4px 30px rgba(0, 0, 0, 0.1)',
+        'glow-blue': '0 0 20px rgba(37, 99, 235, 0.15)',
       }
     },
   },

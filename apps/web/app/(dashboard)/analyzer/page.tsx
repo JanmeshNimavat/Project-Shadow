@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { useThreats } from '../../hooks/useThreats';
+import { useThreats } from '../../../hooks/useThreats';
 
 type ThreatReport = {
   classification: "Benign" | "Suspicious" | "Malicious";
@@ -14,7 +14,7 @@ type ThreatReport = {
 
 export default function AnalyzerPage() {
   const { addThreat } = useThreats();
-  const [artifactType, setArtifactType] = useState('URL/Email');
+  const [artifactType, setArtifactType] = useState('Web Link / Email');
   const [content, setContent] = useState('');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [report, setReport] = useState<ThreatReport | null>(null);
@@ -66,8 +66,8 @@ export default function AnalyzerPage() {
         <div className="bg-primary-800/80 backdrop-blur-md rounded-2xl border border-border shadow-lg p-6 flex flex-col gap-4">
           <h2 className="text-lg font-semibold text-white">Input Artifact</h2>
           
-          <div className="flex gap-2">
-            {['URL/Email', 'Network PCAP', 'Sysmon Event', 'Malware Hash'].map(type => (
+          <div className="flex flex-wrap gap-2">
+            {['Web Link / Email', 'Network Traffic', 'System Logs', 'Suspicious File', 'Database Query', 'Other / Raw Text'].map(type => (
               <button
                 key={type}
                 onClick={() => setArtifactType(type)}
@@ -82,12 +82,36 @@ export default function AnalyzerPage() {
             ))}
           </div>
 
-          <textarea
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            placeholder={`Paste suspicious ${artifactType} here...`}
-            className="w-full h-64 bg-primary-900/50 border border-border rounded-xl p-4 text-gray-200 focus:outline-none focus:ring-2 focus:ring-accent-blue/50 font-mono text-sm resize-none"
-          />
+          <div className="relative">
+            <textarea
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              placeholder={artifactType === 'Other / Raw Text' ? "Paste any text, log, code, or data from any source here..." : `Paste suspicious ${artifactType} here...`}
+              className="w-full h-64 bg-primary-900/50 border border-border rounded-xl p-4 pb-12 text-gray-200 focus:outline-none focus:ring-2 focus:ring-accent-blue/50 font-mono text-sm resize-none"
+            />
+            <div className="absolute bottom-3 left-3 flex gap-2">
+              <button 
+                onClick={() => document.getElementById('file-upload')?.click()}
+                className="flex items-center gap-2 px-3 py-1.5 bg-primary-800 hover:bg-white/10 border border-border rounded-lg text-xs font-medium text-gray-300 transition-colors"
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                </svg>
+                Attach File
+              </button>
+              <input 
+                id="file-upload" 
+                type="file" 
+                className="hidden" 
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    setContent(`[Attached File: ${file.name} - ${Math.round(file.size / 1024)}KB]\n` + content);
+                  }
+                }}
+              />
+            </div>
+          </div>
 
           <button
             onClick={handleAnalyze}
